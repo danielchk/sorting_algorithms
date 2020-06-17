@@ -1,55 +1,56 @@
+  
 #include "sort.h"
 
 /**
- * quick_sort - sort array with quicksorth
- * @array: to sort
- * @size: array size
+ * quick_sort - call recursion function
+ * @array: array to sort
+ * @size: size of the array
  */
 void quick_sort(int *array, size_t size)
 {
-	if (array == NULL || size <= 1)
+	if (!array || size <= 1)
 		return;
 	recursion(array, size, array, size);
 }
 
 /**
- * recursion - recursion function that sort
- * @array: array
- * @size: size
- * @mainarr: The complete array
- * @mainsize: The size of the mainarr
+ * recursion - sort array with recursion
+ * @array: to sort
+ * @size: size of the array
+ * @beg: The complete array
+ * @end: The size of the beg
  */
-void recursion(int *array, size_t size, int *mainarr, size_t mainsize)
+void recursion(int *array, size_t size, int *beg, size_t end)
 {
-	int *arr = NULL;
-	int i = -1, current = 0;
+	int *pivot = NULL;
+	long int i = -1, value = 0;
 	size_t j = 0;
 
 	if (array == NULL || size <= 1)
 		return;
-	arr = &array[size - 1];
+	pivot = &array[size - 1];
 	for (j = 0; j < size - 1; j++)
 	{
-		if (array[j] < *arr)
+		if (array[j] <= *pivot)
 		{
 			i++;
 			if (&array[i] != &array[j])
 			{
-				current = array[i];
+				value = array[i];
 				array[i] = array[j];
-				array[j] = current;
-				print_array(mainarr, mainsize);
+				array[j] = value;
+				print_array(beg, end);
 			}
 		}
 	}
 	i++;
-	if (&array[i] != arr)
+	if (&array[i] != pivot)
 	{
-		current = array[i];
-		array[i] = *arr;
-		*arr = current;
-		print_array(mainarr, mainsize);
+		value = array[i];
+		array[i] = *pivot;
+		*pivot = value;
+		print_array(beg, end);
 	}
-	recursion(&array[0], i, mainarr, mainsize);
-	recursion(&array[i + 1], size - (i + 1), mainarr, mainsize);
+	recursion(&array[0], i, beg, end);
+	recursion(&array[i + 1], size - (i + 1), beg, end);
 }
